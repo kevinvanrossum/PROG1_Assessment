@@ -9,6 +9,7 @@ import java.util.Scanner;
  * @version 1.0
  */
 class Game {
+    private final String operatingSystem = System.getProperty("os.name");
 
     /**
      * Instance variables
@@ -26,6 +27,7 @@ class Game {
         // Initialize everything I need:
         // The player, the rooms, items I want in the rooms
         // then call the run() method
+        Player player = new Player(0);
         run();
     }
 
@@ -46,7 +48,7 @@ class Game {
                 handleCommand(in.nextLine());
             }
 
-            // Game loop has stopped exiting game
+            // Game loop has stopped, exiting game
             System.out.println("Spel afgesloten");
             System.exit(1);
         } catch (Exception e) {
@@ -113,7 +115,7 @@ class Game {
                 handleLookCommand();
                 break;
             default:
-                System.out.println("Onbekend commando");
+                System.out.println("Onbekend commando\n");
                 break;
         }
     }
@@ -165,7 +167,7 @@ class Game {
      *
      */
     private void handlePackCommand() {
-        // Show a list Player.items
+        System.out.println("Items in rugzak:");
     }
 
 
@@ -175,6 +177,9 @@ class Game {
      */
     private void handleHelpCommand() {
         // Show a list of available commands
+        System.out.println("### HELP ###");
+        System.out.println("Commando's: ");
+        System.out.println("use {{item}} - Gebruik een item in de kamer of je rugzak");
     }
 
 
@@ -209,8 +214,5 @@ class Game {
 
         return false;
     }
-
-
-
 
 }

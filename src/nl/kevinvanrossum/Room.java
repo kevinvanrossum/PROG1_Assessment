@@ -1,6 +1,5 @@
 package nl.kevinvanrossum;
 
-import com.sun.javafx.image.IntPixelGetter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

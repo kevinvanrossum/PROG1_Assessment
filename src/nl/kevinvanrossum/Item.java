@@ -26,4 +26,20 @@ class Item {
         this.name = name;
         this.usageText = usageText;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUsageText() {
+        return usageText;
+    }
+
+    public void setUsageText(String usageText) {
+        this.usageText = usageText;
+    }
 }
