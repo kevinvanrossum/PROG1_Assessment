@@ -7,4 +7,11 @@ package nl.kevinvanrossum;
  * @version 1.0
  */
 public class Item {
+
+    /**
+     * Instance variables
+     *
+     */
+    private String name;
+    private String usageText;
 }
