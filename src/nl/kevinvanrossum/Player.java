@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @author Kevin van Rossum
  * @version 1.0
  */
-public class Player {
+class Player {
 
     /**
      * Instance variables

@@ -6,7 +6,7 @@ package nl.kevinvanrossum;
  * @author Kevin van Rossum
  * @version 1.0
  */
-public class Item {
+class Item {
 
     /**
      * Instance variables

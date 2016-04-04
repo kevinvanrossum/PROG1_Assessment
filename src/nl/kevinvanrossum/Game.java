@@ -6,7 +6,7 @@ package nl.kevinvanrossum;
  * @author Kevin van Rossum
  * @version 1.0
  */
-public class Game {
+class Game {
 
     /**
      * Instance variables
@@ -15,12 +15,11 @@ public class Game {
     private Player player;
     private Room[] rooms;
 
-
     /**
      * Game constructor method
      *
      */
-    public void Game() {
+    Game() {
         // Initialize everything I need:
         // The player, the rooms, items I want in the rooms
         // then call the run() method
