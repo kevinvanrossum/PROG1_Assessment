@@ -15,5 +15,17 @@ class Room {
      *
      */
     private String description;
-    private ArrayList<Item> items;
+    private ArrayList<Item> items = new ArrayList<>();
+
+
+    /**
+     * Room contructor method
+     * @param description of the room
+     *
+     */
+    public Room(String description) {
+        this.description = description;
+    }
+
+
 }

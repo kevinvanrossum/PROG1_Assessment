@@ -15,6 +15,7 @@ class Game {
     private Player player;
     private Room[] rooms;
 
+
     /**
      * Game constructor method
      *
@@ -23,6 +24,8 @@ class Game {
         // Initialize everything I need:
         // The player, the rooms, items I want in the rooms
         // then call the run() method
+
+        run();
     }
 
 

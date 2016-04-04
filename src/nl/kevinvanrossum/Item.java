@@ -14,4 +14,16 @@ class Item {
      */
     private String name;
     private String usageText;
+
+
+    /**
+     * Item constructor method
+     * @param name Item name
+     * @param usageText Text to display when using the use command
+     *
+     */
+    public Item(String name, String usageText) {
+        this.name = name;
+        this.usageText = usageText;
+    }
 }

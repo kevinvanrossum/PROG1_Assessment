@@ -14,6 +14,16 @@ class Player {
      * Instance variables
      *
      */
-    private ArrayList<Item> items;
+    private ArrayList<Item> items = new ArrayList<>();
     private int roomNumber;
+
+
+    /**
+     * Constructor Method
+     * @param roomNumber where Player starts
+     *
+     */
+    public Player(int roomNumber) {
+        this.roomNumber = roomNumber;
+    }
 }
