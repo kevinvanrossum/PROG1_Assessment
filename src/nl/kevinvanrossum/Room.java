@@ -1,6 +1,9 @@
 package nl.kevinvanrossum;
 
+import com.sun.javafx.image.IntPixelGetter;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Kevin van Rossum on 4-4-2016.
@@ -15,7 +18,8 @@ class Room {
      *
      */
     private String description;
-    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Item> items = new ArrayList<>(); // TODO: change to HashMap
+    private HashMap<String, Room> exits = new HashMap<>();
 
 
     /**
@@ -26,6 +30,5 @@ class Room {
     public Room(String description) {
         this.description = description;
     }
-
 
 }

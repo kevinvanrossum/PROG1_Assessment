@@ -1,5 +1,7 @@
 package nl.kevinvanrossum;
 
+import java.util.Scanner;
+
 /**
  * Created by Kevin van Rossum on 4-4-2016.
  *
@@ -14,7 +16,7 @@ class Game {
      */
     private Player player;
     private Room[] rooms;
-
+    private boolean playing;
 
     /**
      * Game constructor method
@@ -24,7 +26,6 @@ class Game {
         // Initialize everything I need:
         // The player, the rooms, items I want in the rooms
         // then call the run() method
-
         run();
     }
 
@@ -34,9 +35,20 @@ class Game {
      *
      */
     private void run() {
+        Scanner in = new Scanner(System.in);
+
         try {
             // As long as the command isn't to quit:
             // get the next input line and handle it. (handleCommand())
+            playing = true;
+            while(playing) {
+                System.out.println("Vul hieronder een comando in:");
+                handleCommand(in.nextLine());
+            }
+
+            // Game loop has stopped exiting game
+            System.out.println("Spel afgesloten");
+            System.exit(1);
         } catch (Exception e) {
             // Something went wrong, inform the user
         }
@@ -49,16 +61,61 @@ class Game {
      *
      */
     private void handleCommand(String userInput) {
-        // Split the user input string.
+        String command = "";
+        String extraInfo = "";
+
+        // Split the user input string at the first whitespace.
         // The first word is a command. The rest is extra information
+        String[] splitInput = userInput.split(" ", 2);
+
+        if (splitInput.length >= 1) {
+            command = splitInput[0].trim().toLowerCase();
+        }
+        if (splitInput.length == 2) {
+            extraInfo = splitInput[1].trim().toLowerCase();
+        }
+
+        // User input debugging TODO: Remove these lines
+        // System.out.println("Command: " + command);
+        // System.out.println("Extra Info: " + extraInfo);
 
         // Check if the command is to travel between rooms. If so, handle
         // the room travelling using the method: checkRoomTravel()
+        if (command.equals("go")) {
+            checkRoomTravel(extraInfo);
+            return;
+        }
 
         // If there isn't any room travel, then check all other command options.
         // Using a switch over the command string.
         // Depending on the command, you might also need the extra information.
         // e.g. "use stick" has "use" as command and "stick as extra information
+        switch (command) {
+            case "quit":
+                handleQuitCommand();
+                break;
+            case "use":
+                handleUseCommand(extraInfo);
+                break;
+            case "drop":
+                handleDropCommand(extraInfo);
+                break;
+            case "get":
+                handleGetCommand(extraInfo);
+                break;
+            case "pack":
+                handlePackCommand();
+                break;
+            case "help":
+                handleHelpCommand();
+                break;
+            case "look":
+                handleLookCommand();
+                break;
+            default:
+                System.out.println("Onbekend commando");
+                break;
+        }
     }
 
 
@@ -130,7 +187,7 @@ class Game {
 
 
     private void handleQuitCommand() {
-        // Quit the game
+        playing = false;
     }
 
 
