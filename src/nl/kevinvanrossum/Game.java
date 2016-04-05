@@ -38,6 +38,7 @@ class Game {
      */
     private void run() {
         Scanner in = new Scanner(System.in);
+        printIntro();
 
         try {
             // As long as the command isn't to quit:
@@ -177,9 +178,14 @@ class Game {
      */
     private void handleHelpCommand() {
         // Show a list of available commands
-        System.out.println("### HELP ###");
-        System.out.println("Commando's: ");
-        System.out.println("use {{item}} - Gebruik een item in de kamer of je rugzak");
+        System.out.println("go  {{richting}} - Ga door een deur in de gekozen richting.");
+        System.out.println("use  {{item}} - Gebruik een item in de kamer of je rugzak.");
+        System.out.println("get  {{item}} - Pak een item uit de kamer, leg hem in de rugzak.");
+        System.out.println("drop {{item}} - Pak een item uit de rugzak, leg hem in de kamer.");
+        System.out.println("look - Bekijk welke uitgangen en items in deze kamer zijn.");
+        System.out.println("pack - Bekijk welke items in de rugzak zitten.");
+        System.out.println("quit - Stop met spelen en sluit de game af.");
+        System.out.println("help - Laat deze help informatie zien.");
     }
 
 
@@ -213,6 +219,18 @@ class Game {
         // If travel was successful, return true. If not, return false
 
         return false;
+    }
+
+    private void printIntro() {
+        String intro = "______                      _______   __      _                     \n" +
+                "| ___ \\                    |  ___\\ \\ / /     | |                    \n" +
+                "| |_/ /___   ___  _ __ ___ | |__  \\ V / _ __ | | ___  _ __ ___ _ __ \n" +
+                "|    // _ \\ / _ \\| '_ ` _ \\|  __| /   \\| '_ \\| |/ _ \\| '__/ _ \\ '__|\n" +
+                "| |\\ \\ (_) | (_) | | | | | | |___/ /^\\ \\ |_) | | (_) | | |  __/ |   \n" +
+                "\\_| \\_\\___/ \\___/|_| |_| |_\\____/\\/   \\/ .__/|_|\\___/|_|  \\___|_|   \n" +
+                "                                       | |                          \n" +
+                "                                       |_|                          \n\n";
+        System.out.println(intro);
     }
 
 }
