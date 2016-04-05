@@ -26,18 +26,18 @@ class Game {
         // Initialize everything I need:
         // The player, the rooms, items I want in the rooms
         // then call the run() method
+
+        // Create the player and his items
         player = new Player(0);
         player.addItem(new Item("Orc helm", "De helm valt van je hoofd, hij is 5 maten te groot"));
 
-        Room room = new Room("Start kamer");
-        Room room1 = new Room("Tweede kamer");
+        // Create the rooms and its items
+        rooms.add(new Room("Start kamer"));
+        rooms.get(0).addItem(new Item("Brandend Zwaard", "Je zwaait wild met het zwaard in het rond, tot het doofde."));
 
+        rooms.add(new Room("Tweede kamer"));
 
-        room.addItem(new Item("Brandend Zwaard", "Je zwaaidt wild met het zwaard in het rond, tot het doofde."));
-
-        rooms.add(room);
-        rooms.add(room1);
-
+        // Run the game :)
         run();
     }
 
@@ -54,7 +54,7 @@ class Game {
             // get the next input line and handle it. (handleCommand())
             playing = true;
             while (playing) {
-                System.out.println("Vul hieronder een comando in:");
+                System.out.println("\nVul hieronder een comando in:");
                 handleCommand(in.nextLine());
             }
 
@@ -176,19 +176,21 @@ class Game {
 
     /**
      * Handle the pack command
+     * Print a list of items in backpack
      */
     private void handlePackCommand() {
+        // Get all the items in the backpack
         ArrayList<Item> backpack = player.getItems();
 
+        // If backpack is empty give a message
         if (backpack.size() == 0) {
             System.out.println("Rugzak is leeg");
-            return;
+        } else {
+            // Print backpack contents to console
+            System.out.println(backpack.size() + " items in rugzak;");
+            backpack.forEach(item -> System.out.println("- " + item.getName()));
         }
 
-        System.out.println(backpack.size() + " items in rugzak;");
-        for (Item item : player.getItems()) {
-            System.out.println(item.getName());
-        }
     }
 
 
@@ -197,7 +199,7 @@ class Game {
      * Print a list of commands
      */
     private void handleHelpCommand() {
-        // Show a list of available commands
+        // Show a list of available commands in console
         System.out.println("go  {{richting}} - Ga door een deur in de gekozen richting.");
         System.out.println("use  {{item}} - Gebruik een item in de kamer of je rugzak.");
         System.out.println("get  {{item}} - Pak een item uit de kamer, leg hem in de rugzak.");
@@ -214,6 +216,18 @@ class Game {
      */
     private void handleLookCommand() {
         // Show a list of Room.items and all the exits in the room
+
+        // Get the items and doors in the room
+        ArrayList<Item> roomItems = rooms.get(player.getRoomNumber()).getItems();
+        // TODO: get the doors
+
+        if (roomItems.size() == 0) {
+            System.out.println("Geen items in deze kamer");
+        }
+        else {
+            System.out.println(roomItems.size() + " items in deze kamer:");
+            roomItems.forEach(item -> System.out.println("- " + item.getName()));
+        }
     }
 
 
@@ -257,7 +271,7 @@ class Game {
                 "| |\\ \\ (_) | (_) | | | | | | |___/ /^\\ \\ |_) | | (_) | | |  __/ |   \n" +
                 "\\_| \\_\\___/ \\___/|_| |_| |_\\____/\\/   \\/ .__/|_|\\___/|_|  \\___|_|   \n" +
                 "                                       | |                          \n" +
-                "                                       |_|                          \n";
+                "                                       |_|                          ";
         System.out.println(intro);
     }
 
