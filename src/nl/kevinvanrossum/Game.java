@@ -180,7 +180,7 @@ class Game {
     private void handlePackCommand() {
         ArrayList<Item> backpack = player.getItems();
 
-        if (backpack == null) {
+        if (backpack.size() == 0) {
             System.out.println("Rugzak is leeg");
             return;
         }
