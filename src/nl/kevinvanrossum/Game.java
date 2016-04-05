@@ -1,5 +1,6 @@
 package nl.kevinvanrossum;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -13,28 +14,36 @@ class Game {
 
     /**
      * Instance variables
-     *
      */
     private Player player;
-    private Room[] rooms;
+    private ArrayList<Room> rooms = new ArrayList<>();
     private boolean playing;
 
     /**
      * Game constructor method
-     *
      */
     Game() {
         // Initialize everything I need:
         // The player, the rooms, items I want in the rooms
         // then call the run() method
-        Player player = new Player(0);
+        player = new Player(0);
+        player.addItem(new Item("Orc helm", "De helm valt van je hoofd, hij is 5 maten te groot"));
+
+        Room room = new Room("Start kamer");
+        Room room1 = new Room("Tweede kamer");
+
+
+        room.addItem(new Item("Brandend Zwaard", "Je zwaaidt wild met het zwaard in het rond, tot het doofde."));
+
+        rooms.add(room);
+        rooms.add(room1);
+
         run();
     }
 
 
     /**
      * Run the game
-     *
      */
     private void run() {
         Scanner in = new Scanner(System.in);
@@ -44,7 +53,7 @@ class Game {
             // As long as the command isn't to quit:
             // get the next input line and handle it. (handleCommand())
             playing = true;
-            while(playing) {
+            while (playing) {
                 System.out.println("Vul hieronder een comando in:");
                 handleCommand(in.nextLine());
             }
@@ -60,8 +69,8 @@ class Game {
 
     /**
      * Method to handle the userInput
-     * @param userInput "use stick" has "use" as command and "stick as extra information
      *
+     * @param userInput "use stick" has "use" as command and "stick as extra information
      */
     private void handleCommand(String userInput) {
         String command = "";
@@ -124,8 +133,8 @@ class Game {
 
     /**
      * Handle the use command
-     * @param itemName Item in Player.items or Room.items
      *
+     * @param itemName Item in Player.items or Room.items
      */
     private void handleUseCommand(String itemName) {
         // Check if the player has the item in his backpack.
@@ -139,11 +148,13 @@ class Game {
 
     /**
      * Handle the drop command
-     * @param itemName Item in Player.items
      *
+     * @param itemName Item in Player.items
      */
     private void handleDropCommand(String itemName) {
         // Check if the item is in the backpack.
+        Item dropItem = player.getItem(0);
+        player.removeItem(dropItem);
         // If so: remove the item from the backpack and put it
         // in the room
         // If not: tell the player he can't drop that.
@@ -152,8 +163,8 @@ class Game {
 
     /**
      * Handle the get command
-     * @param itemName Item in Room.items
      *
+     * @param itemName Item in Room.items
      */
     private void handleGetCommand(String itemName) {
         // Check if the item is in the room.
@@ -165,16 +176,25 @@ class Game {
 
     /**
      * Handle the pack command
-     *
      */
     private void handlePackCommand() {
-        System.out.println("Items in rugzak:");
+        ArrayList<Item> backpack = player.getItems();
+
+        if (backpack == null) {
+            System.out.println("Rugzak is leeg");
+            return;
+        }
+
+        System.out.println(backpack.size() + " items in rugzak;");
+        for (Item item : player.getItems()) {
+            System.out.println(item.getName());
+        }
     }
 
 
     /**
      * Handle the help command
-     *
+     * Print a list of commands
      */
     private void handleHelpCommand() {
         // Show a list of available commands
@@ -197,6 +217,10 @@ class Game {
     }
 
 
+    /**
+     * Handle the quit command
+     * Set playing boolean to false to quit game loop
+     */
     private void handleQuitCommand() {
         playing = false;
     }
@@ -204,9 +228,9 @@ class Game {
 
     /**
      * Check if and travel to another room
+     *
      * @param command e.g. "go east"
      * @return boolean hasTravelled
-     *
      */
     private boolean checkRoomTravel(String command) {
         // Get the currentRoom from the player and check if this room
@@ -221,6 +245,10 @@ class Game {
         return false;
     }
 
+
+    /**
+     * Print the intro screen of the game
+     */
     private void printIntro() {
         String intro = "______                      _______   __      _                     \n" +
                 "| ___ \\                    |  ___\\ \\ / /     | |                    \n" +
@@ -229,7 +257,7 @@ class Game {
                 "| |\\ \\ (_) | (_) | | | | | | |___/ /^\\ \\ |_) | | (_) | | |  __/ |   \n" +
                 "\\_| \\_\\___/ \\___/|_| |_| |_\\____/\\/   \\/ .__/|_|\\___/|_|  \\___|_|   \n" +
                 "                                       | |                          \n" +
-                "                                       |_|                          \n\n";
+                "                                       |_|                          \n";
         System.out.println(intro);
     }
 

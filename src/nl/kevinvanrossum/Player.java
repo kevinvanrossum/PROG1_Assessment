@@ -12,7 +12,6 @@ class Player {
 
     /**
      * Instance variables
-     *
      */
     private ArrayList<Item> items = new ArrayList<>();
     private int roomNumber;
@@ -20,8 +19,8 @@ class Player {
 
     /**
      * Constructor Method
-     * @param roomNumber where Player starts
      *
+     * @param roomNumber where Player starts
      */
     Player(int roomNumber) {
         this.roomNumber = roomNumber;
@@ -29,41 +28,60 @@ class Player {
 
     /**
      * Get the roomnumber the player is currently exploring
-     * @return roomNumber
      *
+     * @return roomNumber
      */
-    public int getRoomNumber() {
+    int getRoomNumber() {
         return roomNumber;
     }
 
     /**
      * Set the roombnumber the player is currently exploring
-     * @param roomNumber player is exploring
      *
+     * @param roomNumber player is exploring
      */
-    public void setRoomNumber(int roomNumber) {
+    void setRoomNumber(int roomNumber) {
         this.roomNumber = roomNumber;
     }
 
     /**
      * Add an Item to the players.items
-     * @param item to add to player.items
      *
+     * @param item to add to player.items
      */
-    public void addItem(Item item) {
+    void addItem(Item item) {
         this.items.add(item);
     }
 
     /**
      * Get all the items in player.items
-     * @return ArrayList of Items in player.items
      *
+     * @return ArrayList of Items in player.items
      */
-    public ArrayList<Item> getItems() {
+    ArrayList<Item> getItems() {
         if (items.size() < 0) {
             return null;
         }
 
         return items;
+    }
+
+    /**
+     * Get the item from the backpack
+     *
+     * @param key
+     * @return the item
+     */
+    Item getItem(int key) {
+        return items.get(key);
+    }
+
+    /**
+     * Remove the item from the backpack
+     *
+     * @param item
+     */
+    void removeItem(Item item) {
+        items.remove(item);
     }
 }

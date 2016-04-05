@@ -14,7 +14,6 @@ class Room {
 
     /**
      * Instance variables
-     *
      */
     private String description;
     private ArrayList<Item> items = new ArrayList<>(); // TODO: change to HashMap
@@ -23,11 +22,20 @@ class Room {
 
     /**
      * Room contructor method
-     * @param description of the room
      *
+     * @param description of the room
      */
     public Room(String description) {
         this.description = description;
     }
 
+
+    /**
+     * Add items to the room
+     *
+     * @param item to add to room
+     */
+    public void addItem(Item item) {
+        this.items.add(item);
+    }
 }

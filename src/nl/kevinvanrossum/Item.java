@@ -10,7 +10,6 @@ class Item {
 
     /**
      * Instance variables
-     *
      */
     private String name;
     private String usageText;
@@ -18,16 +17,16 @@ class Item {
 
     /**
      * Item constructor method
-     * @param name Item name
-     * @param usageText Text to display when using the use command
      *
+     * @param name      Item name
+     * @param usageText Text to display when using the use command
      */
-    public Item(String name, String usageText) {
+    Item(String name, String usageText) {
         this.name = name;
         this.usageText = usageText;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
@@ -41,5 +40,10 @@ class Item {
 
     public void setUsageText(String usageText) {
         this.usageText = usageText;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }
