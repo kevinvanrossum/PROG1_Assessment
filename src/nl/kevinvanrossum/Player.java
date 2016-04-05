@@ -1,6 +1,7 @@
 package nl.kevinvanrossum;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Kevin van Rossum on 4-4-2016.
@@ -13,7 +14,8 @@ class Player {
     /**
      * Instance variables
      */
-    private ArrayList<Item> items = new ArrayList<>();
+    //private ArrayList<Item> items = new ArrayList<>();
+    private HashMap<String, Item> items = new HashMap<>();
     private int roomNumber;
 
 
@@ -50,7 +52,8 @@ class Player {
      * @param item to add to player.items
      */
     void addItem(Item item) {
-        this.items.add(item);
+        // Add itemName.lowercase() as key for better lookup
+        this.items.put(item.getName().toLowerCase(), item);
     }
 
     /**
@@ -63,7 +66,7 @@ class Player {
             return null;
         }
 
-        return items;
+        return new ArrayList<Item>(items.values());
     }
 
     /**
