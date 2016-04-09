@@ -24,7 +24,7 @@ class Room {
      *
      * @param description of the room
      */
-    public Room(String description) {
+    Room(String description) {
         this.description = description;
     }
 
@@ -34,34 +34,37 @@ class Room {
      *
      * @param item to add to room
      */
-    public void addItem(Item item) {
+    void addItem(Item item) {
         this.items.put(item.getName().toLowerCase(), item);
     }
 
 
     /**
      * Get the items in the Room
+     *
      * @return items in Room
      */
-    public HashMap<String, Item> getItems() {
+    HashMap<String, Item> getItems() {
         return items;
     }
 
 
     /**
      * Get the exits in the Room
+     *
      * @return exits in Room
      */
-    public HashMap<String, Room> getExits() {
+    HashMap<String, Room> getExits() {
         return exits;
     }
 
     /**
      * Add an exit to the Room
+     *
      * @param direction of the exit
-     * @param room the exit leads to
+     * @param room      the exit leads to
      */
-    public void addExit(String direction, Room room) {
+    void addExit(String direction, Room room) {
         direction = direction.toLowerCase();
 
 
@@ -74,15 +77,15 @@ class Room {
 
     }
 
-    public String getDescription() {
+    String getDescription() {
         return description;
     }
 
-    public boolean hasItem(String itemName) {
+    boolean hasItem(String itemName) {
         return items.containsKey(itemName.toLowerCase());
     }
 
-    public void removeItem(Item item) {
+    void removeItem(Item item) {
         items.values().remove(item);
     }
 

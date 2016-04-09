@@ -88,7 +88,7 @@ class Player {
         items.values().remove(item);
     }
 
-    public boolean hasItem(String itemName) {
+    boolean hasItem(String itemName) {
         return items.containsKey(itemName.toLowerCase());
     }
 

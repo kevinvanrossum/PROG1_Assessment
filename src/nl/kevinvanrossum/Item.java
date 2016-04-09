@@ -37,15 +37,15 @@ class Item {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
-    public String getUsageText() {
+    String getUsageText() {
         return usageText;
     }
 
-    public void setUsageText(String usageText) {
+    void setUsageText(String usageText) {
         this.usageText = usageText;
     }
 
@@ -54,11 +54,11 @@ class Item {
         return this.name;
     }
 
-    public boolean isWinning() {
+    boolean isWinning() {
         return winning;
     }
 
-    public void setWinning(boolean winning) {
+    void setWinning(boolean winning) {
         this.winning = winning;
     }
 }

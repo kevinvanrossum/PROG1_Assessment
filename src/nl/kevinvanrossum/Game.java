@@ -47,8 +47,8 @@ class Game {
         // Room items
         rooms.get(0).addItem(new Item("Brandend Zwaard", "Je zwaait wild met het zwaard in het rond, tot het doofde."));
         rooms.get(1).addItem(new Item("Tweehandig Zwaard", "Het zwaard gebruikt zijn handen om extra zwaarden vast te houden."));
-        rooms.get(7).addItem(new Item("Vervloekt Amulet", "Het amulet begint te gloeien en wordt warm."));
-        rooms.get(4).addItem(new Item("Supersnelleschoenen", "Je probeert de schoenen aan te trekken maar krijgt ze niet te pakken.", true));
+        rooms.get(4).addItem(new Item("Vervloekt Amulet", "Het amulet begint te gloeien en wordt warm.", true));
+        rooms.get(7).addItem(new Item("Supersnelleschoenen", "Je probeert de schoenen aan te trekken maar krijgt ze niet te pakken."));
 
         // MAP of the game
         //  8-9-10
