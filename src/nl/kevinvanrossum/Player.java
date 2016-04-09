@@ -75,8 +75,8 @@ class Player {
      * @param key
      * @return the item
      */
-    Item getItem(int key) {
-        return items.get(key);
+    Item getItem(String key) {
+        return items.get(key.toLowerCase());
     }
 
     /**
@@ -85,6 +85,12 @@ class Player {
      * @param item
      */
     void removeItem(Item item) {
-        items.remove(item);
+        items.values().remove(item);
     }
+
+    public boolean hasItem(String itemName) {
+        return items.containsKey(itemName.toLowerCase());
+    }
+
+
 }

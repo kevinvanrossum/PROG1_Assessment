@@ -16,7 +16,7 @@ class Room {
      * Instance variables
      */
     private String description;
-    private ArrayList<Item> items = new ArrayList<>(); // TODO: change to HashMap
+    private HashMap<String, Item> items = new HashMap<>();
     private HashMap<String, Room> exits = new HashMap<>();
 
 
@@ -36,7 +36,7 @@ class Room {
      * @param item to add to room
      */
     public void addItem(Item item) {
-        this.items.add(item);
+        this.items.put(item.getName().toLowerCase(), item);
     }
 
 
@@ -44,7 +44,7 @@ class Room {
      * Get the items in the Room
      * @return items in Room
      */
-    public ArrayList<Item> getItems() {
+    public HashMap<String, Item> getItems() {
         return items;
     }
 
@@ -77,5 +77,23 @@ class Room {
 
     public String getDescription() {
         return description;
+    }
+
+    public boolean hasItem(String itemName) {
+        return items.containsKey(itemName.toLowerCase());
+    }
+
+    public void removeItem(Item item) {
+        items.values().remove(item);
+    }
+
+    /**
+     * Get the item from the Room
+     *
+     * @param key
+     * @return the item
+     */
+    Item getItem(String key) {
+        return items.get(key.toLowerCase());
     }
 }

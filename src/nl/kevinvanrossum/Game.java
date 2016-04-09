@@ -48,7 +48,16 @@ class Game {
         rooms.add(new Room("Negende kamer"));
         rooms.add(new Room("Tiende kamer"));
 
+
+        // MAP of the game
+        //  8-9-10
+        //  |   |
+        //  7 2-3
+        //  | | |
+        //  6-1 4-5
+
         // Path to the final item
+        // rooms 1,2,3,4,5
         rooms.get(0).addExit("North", rooms.get(1));
         rooms.get(1).addExit("South", rooms.get(0));
         rooms.get(1).addExit("East", rooms.get(2));
@@ -58,6 +67,19 @@ class Game {
         rooms.get(3).addExit("East", rooms.get(4));
         rooms.get(4).addExit("West", rooms.get(3));
 
+        // Rooms to get lost in
+        rooms.get(0).addExit("West", rooms.get(5));
+        rooms.get(5).addExit("East", rooms.get(0));
+        rooms.get(5).addExit("North", rooms.get(6));
+        rooms.get(6).addExit("South", rooms.get(5));
+        rooms.get(6).addExit("North", rooms.get(7));
+        rooms.get(7).addExit("South", rooms.get(6));
+        rooms.get(7).addExit("East", rooms.get(8));
+        rooms.get(8).addExit("West", rooms.get(7));
+        rooms.get(8).addExit("East", rooms.get(9));
+        rooms.get(9).addExit("West", rooms.get(8));
+        rooms.get(9).addExit("South", rooms.get(2));
+        rooms.get(2).addExit("North", rooms.get(9));
 
         // Run the game :)
         run();
@@ -85,6 +107,7 @@ class Game {
             System.exit(1);
         } catch (Exception e) {
             // Something went wrong, inform the user
+            e.printStackTrace();
         }
     }
 
@@ -175,13 +198,17 @@ class Game {
      */
     private void handleDropCommand(String itemName) {
         // Check if the item is in the backpack.
-        // todo: fix this with a HashMap
-        Item dropItem = player.getItem(0);
-        player.removeItem(dropItem);
-        rooms.get(player.getRoomNumber()).addItem(dropItem);
-        // If so: remove the item from the backpack and put it
-        // in the room
-        // If not: tell the player he can't drop that.
+        if (player.hasItem(itemName)) {
+            // If so: remove the item from the backpack and put it
+            // in the room
+            Item dropItem = player.getItem(itemName);
+            player.removeItem(dropItem);
+            rooms.get(player.getRoomNumber()).addItem(dropItem);
+        }
+        else {
+            // If not: tell the player he can't drop that.
+            System.out.println("Je hebt dit item niet in je rugzak");
+        }
     }
 
 
@@ -192,9 +219,18 @@ class Game {
      */
     private void handleGetCommand(String itemName) {
         // Check if the item is in the room.
-        // If so: remove the item from the room and put it
-        // in the backpack
-        // If not: tell the player he can't get that.
+        Room currentRoom = rooms.get(player.getRoomNumber());
+        if (currentRoom.hasItem(itemName)) {
+            // If so: remove the item from the room and put it
+            // in the backpack
+            Item dropItem = currentRoom.getItem(itemName);
+            currentRoom.removeItem(dropItem);
+            player.addItem(dropItem);
+        }
+        else {
+            // If not: tell the player he can't get that.
+            System.out.println("Dit item ligt niet in deze kamer");
+        }
     }
 
 
@@ -241,16 +277,16 @@ class Game {
      */
     private void handleLookCommand() {
         // Get the items and doors in the room
-        ArrayList<Item> roomItems = rooms.get(player.getRoomNumber()).getItems();
+        HashMap<String, Item> roomItems = rooms.get(player.getRoomNumber()).getItems();
         HashMap<String, Room> roomExits = rooms.get(player.getRoomNumber()).getExits();
 
         if (roomItems.size() == 0) {
             System.out.println("Geen items in deze kamer");
         } else {
             System.out.println(roomItems.size() + " items in deze kamer:");
-            roomItems.forEach(item -> System.out.println("- " + item.getName()));
+            roomItems.forEach((itemName, item) -> System.out.println("- " + item.getName()));
         }
-        
+
         if (roomExits.size() == 0) {
             System.out.println("De GM is vergeten een deur te plaatsen, je zit hier nu vast!");
         } else {
