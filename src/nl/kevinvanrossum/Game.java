@@ -182,12 +182,27 @@ class Game {
      * @param itemName Item in Player.items or Room.items
      */
     private void handleUseCommand(String itemName) {
+        Item item;
+        Room currentRoom = rooms.get(player.getRoomNumber());
+
         // Check if the player has the item in his backpack.
-        // If in the backpack: use it
+        if (player.hasItem(itemName)) {
+            // If in the backpack: use it
+            item = player.getItem(itemName);
+            System.out.println(item.getName() + ": " + item.getUsageText());
+        }
         // If not in the backpack: check if in the room
-        // If the item is in the room: use it.
-        // If no item with that name is present: tell the user he's
-        // trying to use something that isn't there.
+        else if (currentRoom.hasItem(itemName)) {
+            // If the item is in the room: use it.
+            item = currentRoom.getItem(itemName);
+            System.out.println(item.getName() + ": " + item.getUsageText());
+        }
+        else {
+            // If no item with that name is present: tell the user he's
+            // trying to use something that isn't there.
+            System.out.println("Item is niet in de rugzak of kamer te vinden");
+        }
+
     }
 
 
@@ -204,6 +219,7 @@ class Game {
             Item dropItem = player.getItem(itemName);
             player.removeItem(dropItem);
             rooms.get(player.getRoomNumber()).addItem(dropItem);
+            System.out.println(dropItem.getName() + " is in de kamer achter gelaten");
         }
         else {
             // If not: tell the player he can't drop that.
@@ -226,6 +242,7 @@ class Game {
             Item dropItem = currentRoom.getItem(itemName);
             currentRoom.removeItem(dropItem);
             player.addItem(dropItem);
+            System.out.println(dropItem.getName() + " is in de rugzak gestopt");
         }
         else {
             // If not: tell the player he can't get that.
@@ -245,7 +262,8 @@ class Game {
         // If backpack is empty give a message
         if (backpack.size() == 0) {
             System.out.println("Rugzak is leeg");
-        } else {
+        }
+        else {
             // Print backpack contents to console
             System.out.println(backpack.size() + " items in rugzak;");
             backpack.forEach(item -> System.out.println("- " + item.getName()));
@@ -282,14 +300,16 @@ class Game {
 
         if (roomItems.size() == 0) {
             System.out.println("Geen items in deze kamer");
-        } else {
+        }
+        else {
             System.out.println(roomItems.size() + " items in deze kamer:");
             roomItems.forEach((itemName, item) -> System.out.println("- " + item.getName()));
         }
 
         if (roomExits.size() == 0) {
             System.out.println("De GM is vergeten een deur te plaatsen, je zit hier nu vast!");
-        } else {
+        }
+        else {
             System.out.println(roomExits.size() + " deuren in deze kamer:");
             roomExits.forEach((direction, room) -> System.out.println("Richting: " + direction));
         }
