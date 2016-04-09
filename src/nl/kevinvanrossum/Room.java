@@ -40,7 +40,29 @@ class Room {
     }
 
 
+    /**
+     * Get the items in the Room
+     * @return items in Room
+     */
     public ArrayList<Item> getItems() {
         return items;
+    }
+
+
+    /**
+     * Get the exits in the Room
+     * @return exits in Room
+     */
+    public HashMap<String, Room> getExits() {
+        return exits;
+    }
+
+    /**
+     * Add an exit to the Room
+     * @param direction of the exit
+     * @param room the exit leads to
+     */
+    public void addExit(String direction, Room room) {
+        exits.put(direction, room);
     }
 }

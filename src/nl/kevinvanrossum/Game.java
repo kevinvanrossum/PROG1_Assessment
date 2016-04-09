@@ -1,6 +1,7 @@
 package nl.kevinvanrossum;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -32,10 +33,24 @@ class Game {
         player.addItem(new Item("Orc helm", "De helm valt van je hoofd, hij is 5 maten te groot"));
 
         // Create the rooms and its items
+        // Room1
         rooms.add(new Room("Start kamer"));
         rooms.get(0).addItem(new Item("Brandend Zwaard", "Je zwaait wild met het zwaard in het rond, tot het doofde."));
 
         rooms.add(new Room("Tweede kamer"));
+        rooms.get(1).addItem(new Item("Tweehandig Zwaard", "Het zwaard gebruikt zijn handen om extra zwaarden vast te houden."));
+        rooms.add(new Room("Derde kamer"));
+        rooms.add(new Room("Vierde kamer"));
+        rooms.add(new Room("Vijfde kamer"));
+        rooms.add(new Room("Zesde kamer"));
+        rooms.add(new Room("Zevende kamer"));
+        rooms.add(new Room("Achtste kamer"));
+        rooms.add(new Room("Negende kamer"));
+        rooms.add(new Room("Tiende kamer"));
+
+        rooms.get(0).addExit("North", rooms.get(1));
+        rooms.get(1).addExit("South", rooms.get(0));
+
 
         // Run the game :)
         run();
@@ -153,8 +168,10 @@ class Game {
      */
     private void handleDropCommand(String itemName) {
         // Check if the item is in the backpack.
+        // todo: fix this with a HashMap
         Item dropItem = player.getItem(0);
         player.removeItem(dropItem);
+        rooms.get(player.getRoomNumber()).addItem(dropItem);
         // If so: remove the item from the backpack and put it
         // in the room
         // If not: tell the player he can't drop that.
@@ -213,20 +230,25 @@ class Game {
 
     /**
      * Handle the look command
+     * Show a list of Room.items and all the exits in the room
      */
     private void handleLookCommand() {
-        // Show a list of Room.items and all the exits in the room
-
         // Get the items and doors in the room
         ArrayList<Item> roomItems = rooms.get(player.getRoomNumber()).getItems();
-        // TODO: get the doors
+        HashMap<String, Room> roomExits = rooms.get(player.getRoomNumber()).getExits();
 
         if (roomItems.size() == 0) {
             System.out.println("Geen items in deze kamer");
-        }
-        else {
+        } else {
             System.out.println(roomItems.size() + " items in deze kamer:");
             roomItems.forEach(item -> System.out.println("- " + item.getName()));
+        }
+        
+        if (roomExits.size() == 0) {
+            System.out.println("De GM is vergeten een deur te plaatsen, je zit hier nu vast!");
+        } else {
+            System.out.println(roomExits.size() + " deuren in deze kamer:");
+            roomExits.forEach((direction, room) -> System.out.println("Richting: " + direction));
         }
     }
 
