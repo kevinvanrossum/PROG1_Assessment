@@ -48,8 +48,15 @@ class Game {
         rooms.add(new Room("Negende kamer"));
         rooms.add(new Room("Tiende kamer"));
 
+        // Path to the final item
         rooms.get(0).addExit("North", rooms.get(1));
         rooms.get(1).addExit("South", rooms.get(0));
+        rooms.get(1).addExit("East", rooms.get(2));
+        rooms.get(2).addExit("West", rooms.get(1));
+        rooms.get(2).addExit("South", rooms.get(3));
+        rooms.get(3).addExit("North", rooms.get(2));
+        rooms.get(3).addExit("East", rooms.get(4));
+        rooms.get(4).addExit("West", rooms.get(3));
 
 
         // Run the game :)
@@ -270,14 +277,25 @@ class Game {
      */
     private boolean checkRoomTravel(String command) {
         // Get the currentRoom from the player and check if this room
-        // has an exit in the direcetion of command(East, South,
+        // has an exit in the direction of command(East, South,
         // North, West)
+        HashMap<String, Room> currentRoomExits = rooms.get(player.getRoomNumber()).getExits();
+
         // If there is an exit in that direction, ask the currentRoom
         // to get that room.
         // Tell the player to travel to the destination room.
+        if (currentRoomExits.containsKey(command)) {
+            player.setRoomNumber(rooms.indexOf(currentRoomExits.get(command)));
+            System.out.println("Je trapt de deur in en betreed de kamer");
+            Room currentRoom = rooms.get(player.getRoomNumber());
+            System.out.println(currentRoom.getDescription());
+            handleLookCommand();
+            return true;
+        }
+
         // If there is no exit in that direction, tell the player.
         // If travel was successful, return true. If not, return false
-
+        System.out.println("Geen uitgang in die richting, kijk nog eens goed.");
         return false;
     }
 

@@ -63,6 +63,19 @@ class Room {
      * @param room the exit leads to
      */
     public void addExit(String direction, Room room) {
-        exits.put(direction, room);
+        direction = direction.toLowerCase();
+
+
+        if (direction.equals("north") || direction.equals("south") || direction.equals("east") || direction.equals("west")) {
+            exits.put(direction, room);
+            return;
+        }
+
+        System.out.println("Geen geldige richting, probeer opnieuw");
+
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
