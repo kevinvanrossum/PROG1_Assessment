@@ -1,7 +1,6 @@
 package nl.kevinvanrossum;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

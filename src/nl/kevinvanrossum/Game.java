@@ -33,12 +33,8 @@ class Game {
         player.addItem(new Item("Orc helm", "De helm valt van je hoofd, hij is 5 maten te groot"));
 
         // Create the rooms and its items
-        // Room1
         rooms.add(new Room("Start kamer"));
-        rooms.get(0).addItem(new Item("Brandend Zwaard", "Je zwaait wild met het zwaard in het rond, tot het doofde."));
-
         rooms.add(new Room("Tweede kamer"));
-        rooms.get(1).addItem(new Item("Tweehandig Zwaard", "Het zwaard gebruikt zijn handen om extra zwaarden vast te houden."));
         rooms.add(new Room("Derde kamer"));
         rooms.add(new Room("Vierde kamer"));
         rooms.add(new Room("Vijfde kamer"));
@@ -48,6 +44,11 @@ class Game {
         rooms.add(new Room("Negende kamer"));
         rooms.add(new Room("Tiende kamer"));
 
+        // Room items
+        rooms.get(0).addItem(new Item("Brandend Zwaard", "Je zwaait wild met het zwaard in het rond, tot het doofde."));
+        rooms.get(1).addItem(new Item("Tweehandig Zwaard", "Het zwaard gebruikt zijn handen om extra zwaarden vast te houden."));
+        rooms.get(7).addItem(new Item("Vervloekt Amulet", "Het amulet begint te gloeien en wordt warm."));
+        rooms.get(4).addItem(new Item("Supersnelleschoenen", "Je probeert de schoenen aan te trekken maar krijgt ze niet te pakken.", true));
 
         // MAP of the game
         //  8-9-10
@@ -57,7 +58,6 @@ class Game {
         //  6-1 4-5
 
         // Path to the final item
-        // rooms 1,2,3,4,5
         rooms.get(0).addExit("North", rooms.get(1));
         rooms.get(1).addExit("South", rooms.get(0));
         rooms.get(1).addExit("East", rooms.get(2));
@@ -103,7 +103,6 @@ class Game {
             }
 
             // Game loop has stopped, exiting game
-            System.out.println("Spel afgesloten");
             System.exit(1);
         } catch (Exception e) {
             // Something went wrong, inform the user
@@ -189,13 +188,13 @@ class Game {
         if (player.hasItem(itemName)) {
             // If in the backpack: use it
             item = player.getItem(itemName);
-            System.out.println(item.getName() + ": " + item.getUsageText());
+            useItem(item);
         }
         // If not in the backpack: check if in the room
         else if (currentRoom.hasItem(itemName)) {
             // If the item is in the room: use it.
             item = currentRoom.getItem(itemName);
-            System.out.println(item.getName() + ": " + item.getUsageText());
+            useItem(item);
         }
         else {
             // If no item with that name is present: tell the user he's
@@ -203,6 +202,20 @@ class Game {
             System.out.println("Item is niet in de rugzak of kamer te vinden");
         }
 
+    }
+
+    /**
+     * Use a given item
+     * If the item is a winning item the has won
+     * @param item from backpack or Room
+     */
+    private void useItem(Item item) {
+        System.out.println(item.getName() + ": " + item.getUsageText());
+        if (item.isWinning()) {
+            System.out.println("Je hebt het winnende item gevonden");
+            System.out.println("Het spel is afgelopen");
+            playing = false;
+        }
     }
 
 
@@ -311,7 +324,7 @@ class Game {
         }
         else {
             System.out.println(roomExits.size() + " deuren in deze kamer:");
-            roomExits.forEach((direction, room) -> System.out.println("Richting: " + direction));
+            roomExits.forEach((direction, room) -> System.out.println("- " + direction));
         }
     }
 
@@ -321,6 +334,7 @@ class Game {
      * Set playing boolean to false to quit game loop
      */
     private void handleQuitCommand() {
+        System.out.println("Spel afgesloten");
         playing = false;
     }
 

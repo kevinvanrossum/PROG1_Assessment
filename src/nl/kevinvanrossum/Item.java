@@ -13,6 +13,7 @@ class Item {
      */
     private String name;
     private String usageText;
+    private boolean winning;
 
 
     /**
@@ -24,6 +25,12 @@ class Item {
     Item(String name, String usageText) {
         this.name = name;
         this.usageText = usageText;
+    }
+
+    Item(String name, String usageText, Boolean winning) {
+        this.name = name;
+        this.usageText = usageText;
+        this.winning = winning;
     }
 
     String getName() {
@@ -45,5 +52,13 @@ class Item {
     @Override
     public String toString() {
         return this.name;
+    }
+
+    public boolean isWinning() {
+        return winning;
+    }
+
+    public void setWinning(boolean winning) {
+        this.winning = winning;
     }
 }
