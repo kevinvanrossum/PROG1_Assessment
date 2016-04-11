@@ -17,7 +17,7 @@ class Room {
     private String description;
     private HashMap<String, Item> items = new HashMap<>();
     private HashMap<String, Room> exits = new HashMap<>();
-
+    private Enemy enemy;
 
     /**
      * Room contructor method
@@ -97,5 +97,13 @@ class Room {
      */
     Item getItem(String key) {
         return items.get(key.toLowerCase());
+    }
+
+    void setEnemy(Enemy enemy) {
+        this.enemy = enemy;
+    }
+
+    Enemy getEnemy() {
+        return enemy;
     }
 }

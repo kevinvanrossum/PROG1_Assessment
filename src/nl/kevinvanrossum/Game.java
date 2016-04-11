@@ -49,6 +49,9 @@ class Game {
         rooms.get(4).addItem(new Item("Vervloekt Amulet", "Het amulet begint te gloeien en wordt warm.", true));
         rooms.get(7).addItem(new Item("Supersnelleschoenen", "Je probeert de schoenen aan te trekken maar krijgt ze niet te pakken."));
 
+        // Enemies
+        rooms.get(1).setEnemy(new Enemy("Internet Troll", "Hij heeft geen speciale krachten en is daar boos om!", 6));
+
         // MAP of the game
         //  8-9-10
         //  |   |
@@ -312,10 +315,19 @@ class Game {
      * Show a list of Room.items and all the exits in the room
      */
     private void handleLookCommand() {
-        // Get the items and doors in the room
+        // Get the enemy, items and doors in the room
         HashMap<String, Item> roomItems = rooms.get(player.getRoomNumber()).getItems();
         HashMap<String, Room> roomExits = rooms.get(player.getRoomNumber()).getExits();
+        Enemy roomEnemy = rooms.get(player.getRoomNumber()).getEnemy();
 
+        // enemy
+        if (roomEnemy != null) {
+            System.out.println("Deze kamer bevat een vijand!");
+            System.out.println("- " + roomEnemy.getName());
+            System.out.println("  " + roomEnemy.getDescription());
+        }
+
+        // items
         if (roomItems.size() == 0) {
             System.out.println("Geen items in deze kamer");
         }
@@ -324,6 +336,7 @@ class Game {
             roomItems.forEach((itemName, item) -> System.out.println("- " + item.getName()));
         }
 
+        // exits
         if (roomExits.size() == 0) {
             System.out.println("De GM is vergeten een deur te plaatsen, je zit hier nu vast!");
         }
