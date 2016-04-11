@@ -42,6 +42,8 @@ class Game {
         rooms.add(new Room("Achtste kamer"));
         rooms.add(new Room("Negende kamer"));
         rooms.add(new Room("Tiende kamer"));
+        rooms.add(new Room("Elfde kamer"));
+        rooms.add(new Room("Twaalfde kamer"));
 
         // Room items
         rooms.get(0).addItem(new Item("Brandend Zwaard", "Je zwaait wild met het zwaard in het rond, tot het doofde."));
@@ -50,14 +52,15 @@ class Game {
         rooms.get(7).addItem(new Item("Supersnelleschoenen", "Je probeert de schoenen aan te trekken maar krijgt ze niet te pakken."));
 
         // Enemies
-        rooms.get(1).setEnemy(new Enemy("Internet Troll", "Hij heeft geen speciale krachten en is daar boos om!", 6));
+        rooms.get(1).setEnemy(new Enemy("Internet Troll", "Hij heeft geen speciale krachten en is daar boos om!", 1));
+        rooms.get(11).setEnemy(new Enemy("Squidzilla", "De orginele japanse octopus", 5));
 
         // MAP of the game
-        //  8-9-10
-        //  |   |
-        //  7 2-3
-        //  | | |
-        //  6-1 4-5
+        //  8--9--10-12
+        //  |     |  |
+        //  7  2--3--11
+        //  |  |  |
+        //  6 -1  4--5
 
         // Path to the final item
         rooms.get(0).addExit("North", rooms.get(1));
@@ -82,6 +85,12 @@ class Game {
         rooms.get(9).addExit("West", rooms.get(8));
         rooms.get(9).addExit("South", rooms.get(2));
         rooms.get(2).addExit("North", rooms.get(9));
+        rooms.get(9).addExit("East", rooms.get(11));
+        rooms.get(11).addExit("West", rooms.get(9));
+        rooms.get(11).addExit("South", rooms.get(10));
+        rooms.get(10).addExit("North", rooms.get(11));
+        rooms.get(10).addExit("West", rooms.get(2));
+        rooms.get(2).addExit("East", rooms.get(10));
 
         // Run the game :)
         run();
@@ -134,10 +143,6 @@ class Game {
         if (splitInput.length == 2) {
             extraInfo = splitInput[1].trim().toLowerCase();
         }
-
-        // User input debugging TODO: Remove these lines
-        // System.out.println("Command: " + command);
-        // System.out.println("Extra Info: " + extraInfo);
 
         // Check if the command is to travel between rooms. If so, handle
         // the room travelling using the method: checkRoomTravel()
@@ -277,17 +282,9 @@ class Game {
         ArrayList<Item> backpack = player.getItems();
 
         // If backpack is empty give a message
-        if (backpack.size() == 0) {
-            System.out.println("Rugzak is leeg");
-        }
-        else {
-            // Print backpack contents to console
-            System.out.println(backpack.size() + " items in rugzak;");
-            backpack.forEach(item -> System.out.println("- " + item.getName()));
-        }
+        printPackInfo(backpack);
 
     }
-
 
     /**
      * Handle the help command
@@ -295,18 +292,7 @@ class Game {
      */
     private void handleHelpCommand() {
         // Show a list of available commands in console
-        System.out.println("go  {{richting}} - Ga door een deur in de gekozen richting.");
-        System.out.println("    - go north, go south");
-        System.out.println("use  {{item naam}} - Gebruik een item in de kamer of je rugzak.");
-        System.out.println("    - use stok, use sleutel");
-        System.out.println("get  {{item naam}} - Pak een item uit de kamer, leg hem in de rugzak.");
-        System.out.println("    - get stok, get schild");
-        System.out.println("drop {{item naam}} - Pak een item uit de rugzak, leg hem in de kamer.");
-        System.out.println("    - drop stok, drop schild");
-        System.out.println("look - Bekijk welke uitgangen en items in deze kamer zijn.");
-        System.out.println("pack - Bekijk welke items in de rugzak zitten.");
-        System.out.println("quit - Stop met spelen en sluit de game af.");
-        System.out.println("help - Laat deze help informatie zien.");
+        printHelpInfo();
     }
 
 
@@ -321,31 +307,14 @@ class Game {
         Enemy roomEnemy = rooms.get(player.getRoomNumber()).getEnemy();
 
         // enemy
-        if (roomEnemy != null) {
-            System.out.println("Deze kamer bevat een vijand!");
-            System.out.println("- " + roomEnemy.getName());
-            System.out.println("  " + roomEnemy.getDescription());
-        }
+        printEnemyInfo(roomEnemy);
 
         // items
-        if (roomItems.size() == 0) {
-            System.out.println("Geen items in deze kamer");
-        }
-        else {
-            System.out.println(roomItems.size() + " items in deze kamer:");
-            roomItems.forEach((itemName, item) -> System.out.println("- " + item.getName()));
-        }
+        printItemInfo(roomItems);
 
         // exits
-        if (roomExits.size() == 0) {
-            System.out.println("De GM is vergeten een deur te plaatsen, je zit hier nu vast!");
-        }
-        else {
-            System.out.println(roomExits.size() + " deuren in deze kamer:");
-            roomExits.forEach((direction, room) -> System.out.println("- " + direction));
-        }
+        printRoomExits(roomExits);
     }
-
 
     /**
      * Handle the quit command
@@ -410,4 +379,57 @@ class Game {
         handleLookCommand();
     }
 
+    private void printRoomExits(HashMap<String, Room> roomExits) {
+        if (roomExits.size() == 0) {
+            System.out.println("De GM is vergeten een deur te plaatsen, je zit hier nu vast!");
+        }
+        else {
+            System.out.println(roomExits.size() + " deuren in deze kamer:");
+            roomExits.forEach((direction, room) -> System.out.println("- " + direction));
+        }
+    }
+
+    private void printItemInfo(HashMap<String, Item> roomItems) {
+        if (roomItems.size() == 0) {
+            System.out.println("Geen items in deze kamer");
+        }
+        else {
+            System.out.println(roomItems.size() + " items in deze kamer:");
+            roomItems.forEach((itemName, item) -> System.out.println("- " + item.getName()));
+        }
+    }
+
+    private void printEnemyInfo(Enemy roomEnemy) {
+        if (roomEnemy != null) {
+            System.out.println("Deze kamer bevat een vijand!");
+            System.out.println("- " + roomEnemy.getName());
+            System.out.println("  " + roomEnemy.getDescription());
+        }
+    }
+
+    private void printHelpInfo() {
+        System.out.println("go  {{richting}} - Ga door een deur in de gekozen richting.");
+        System.out.println("    - go north, go south");
+        System.out.println("use  {{item naam}} - Gebruik een item in de kamer of je rugzak.");
+        System.out.println("    - use stok, use sleutel");
+        System.out.println("get  {{item naam}} - Pak een item uit de kamer, leg hem in de rugzak.");
+        System.out.println("    - get stok, get schild");
+        System.out.println("drop {{item naam}} - Pak een item uit de rugzak, leg hem in de kamer.");
+        System.out.println("    - drop stok, drop schild");
+        System.out.println("look - Bekijk welke uitgangen en items in deze kamer zijn.");
+        System.out.println("pack - Bekijk welke items in de rugzak zitten.");
+        System.out.println("quit - Stop met spelen en sluit de game af.");
+        System.out.println("help - Laat deze help informatie zien.");
+    }
+
+    private void printPackInfo(ArrayList<Item> backpack) {
+        if (backpack.size() == 0) {
+            System.out.println("Rugzak is leeg");
+        }
+        else {
+            // Print backpack contents to console
+            System.out.println(backpack.size() + " items in rugzak;");
+            backpack.forEach(item -> System.out.println("- " + item.getName()));
+        }
+    }
 }

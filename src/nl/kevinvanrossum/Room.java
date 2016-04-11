@@ -77,14 +77,30 @@ class Room {
 
     }
 
+    /**
+     * Get the description of the Room
+     *
+     * @return description of the Room
+     */
     String getDescription() {
         return description;
     }
 
+    /**
+     * Check if room contains Item
+     *
+     * @param itemName of an Item
+     * @return hasItem?
+     */
     boolean hasItem(String itemName) {
         return items.containsKey(itemName.toLowerCase());
     }
 
+    /**
+     * Remove Item from the Room
+     *
+     * @param item to remove
+     */
     void removeItem(Item item) {
         items.values().remove(item);
     }
@@ -99,10 +115,20 @@ class Room {
         return items.get(key.toLowerCase());
     }
 
+    /**
+     * Set an Enemy in the Room
+     *
+     * @param enemy to set in the Room
+     */
     void setEnemy(Enemy enemy) {
         this.enemy = enemy;
     }
 
+    /**
+     * Get the Enemy in the Room
+     *
+     * @return Enemy in the Room
+     */
     Enemy getEnemy() {
         return enemy;
     }

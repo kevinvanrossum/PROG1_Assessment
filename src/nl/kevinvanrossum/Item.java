@@ -27,33 +27,59 @@ class Item {
         this.usageText = usageText;
     }
 
+    /**
+     * Item constructor method
+     *
+     * @param name      Item name
+     * @param usageText Text to display when using the use command
+     * @param winning   Is the item that ends the game
+     */
     Item(String name, String usageText, Boolean winning) {
         this.name = name;
         this.usageText = usageText;
         this.winning = winning;
     }
 
+    /**
+     * Get the name of the Item
+     *
+     * @return Item name
+     */
     String getName() {
         return name;
     }
 
+    /**
+     * Set the name of the Item
+     *
+     * @param name of the Item
+     */
     void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Get the usageText of the Item
+     *
+     * @return usageText of the Item
+     */
     String getUsageText() {
         return usageText;
     }
 
-    void setUsageText(String usageText) {
-        this.usageText = usageText;
-    }
-
+    /**
+     * @return Item.name
+     */
     @Override
     public String toString() {
         return this.name;
     }
 
+    /**
+     * Check if this Item ends the Game
+     *
+     * @return isWinning
+     */
     boolean isWinning() {
         return winning;
     }
