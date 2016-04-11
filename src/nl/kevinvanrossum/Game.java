@@ -11,7 +11,6 @@ import java.util.Scanner;
  * @version 1.0
  */
 class Game {
-    private final String operatingSystem = System.getProperty("os.name");
 
     /**
      * Instance variables
@@ -92,6 +91,7 @@ class Game {
     private void run() {
         Scanner in = new Scanner(System.in);
         printIntro();
+        printRoomInfo(player.getRoomNumber());
 
         try {
             // As long as the command isn't to quit:
@@ -103,6 +103,7 @@ class Game {
             }
 
             // Game loop has stopped, exiting game
+            in.close();
             System.exit(1);
         } catch (Exception e) {
             // Something went wrong, inform the user
@@ -292,9 +293,13 @@ class Game {
     private void handleHelpCommand() {
         // Show a list of available commands in console
         System.out.println("go  {{richting}} - Ga door een deur in de gekozen richting.");
-        System.out.println("use  {{item}} - Gebruik een item in de kamer of je rugzak.");
-        System.out.println("get  {{item}} - Pak een item uit de kamer, leg hem in de rugzak.");
-        System.out.println("drop {{item}} - Pak een item uit de rugzak, leg hem in de kamer.");
+        System.out.println("    - go north, go south");
+        System.out.println("use  {{item naam}} - Gebruik een item in de kamer of je rugzak.");
+        System.out.println("    - use stok, use sleutel");
+        System.out.println("get  {{item naam}} - Pak een item uit de kamer, leg hem in de rugzak.");
+        System.out.println("    - get stok, get schild");
+        System.out.println("drop {{item naam}} - Pak een item uit de rugzak, leg hem in de kamer.");
+        System.out.println("    - drop stok, drop schild");
         System.out.println("look - Bekijk welke uitgangen en items in deze kamer zijn.");
         System.out.println("pack - Bekijk welke items in de rugzak zitten.");
         System.out.println("quit - Stop met spelen en sluit de game af.");
@@ -356,10 +361,7 @@ class Game {
         // Tell the player to travel to the destination room.
         if (currentRoomExits.containsKey(command)) {
             player.setRoomNumber(rooms.indexOf(currentRoomExits.get(command)));
-            System.out.println("Je trapt de deur in en betreed de kamer");
-            Room currentRoom = rooms.get(player.getRoomNumber());
-            System.out.println(currentRoom.getDescription());
-            handleLookCommand();
+            printRoomInfo(player.getRoomNumber());
             return true;
         }
 
@@ -383,6 +385,16 @@ class Game {
                 "                                       | |                          \n" +
                 "                                       |_|                          ";
         System.out.println(intro);
+        System.out.println("Beweeg jezelf door het doolhof.");
+        System.out.println("Je missie is het vinden van het vervloekt amulet");
+        System.out.println("Succes!\n");
+    }
+
+    private void printRoomInfo(int roomNumber) {
+        System.out.println("Je trapt de deur in en betreed de kamer");
+        Room room = rooms.get(roomNumber);
+        System.out.println(room.getDescription());
+        handleLookCommand();
     }
 
 }
